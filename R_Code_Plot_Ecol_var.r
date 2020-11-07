@@ -16,7 +16,7 @@ summary(meuse)
 #exercise: plot zinc(y) against cadmium(x)
 #error
 plot(cadmium,zinc)
-error in evaluating the argument 'x' 
+#error in evaluating the argument 'x' 
 
 # $
 plot(meuse$cadmium, meuse$zinc)
