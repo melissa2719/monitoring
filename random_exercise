@@ -1,0 +1,33 @@
+install.packages("sp")
+library(sp)
+data(meuse)
+
+#used to see how dataset is structured
+meuse
+
+#to see first row in a set
+head(meuse)
+
+#summary
+#summary of the set
+summary(meuse)
+
+#plot two variables; let's see ex. zinc related to copper
+attach(meuse)
+plot(zinc, copper)
+plot(zinc, copper, col="green")
+plot(zinc, copper, col="green", pch=19)
+plot(zinc, copper, col="green", pch=19, cex=2)
+
+pairs(meuse)
+pairs(~ cadmium + copper + lead , data=meuse)
+
+#cadmium, copper, lead and zinc
+pairs(meuse[,3:6])
+pairs(meuse[,3:6], col="red")
+pairs(meuse[,3:6], col="red", pch=19)
+pairs(meuse[,3:6], col="red", pch=19, cex=3)
+pairs(meuse[,3:6], col="red", pch=19, cex=3, main="Primo pairs")
+#relation between elevation an elements
+pairs(meuse[,3:7], col="red", pch=19, cex=3, main="Primo pairs")
+
