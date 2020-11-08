@@ -1,0 +1,84 @@
+#R code for spatial view of points
+install.packages("sp")
+library(meuse)
+
+data(meuse)
+head(meuse)
+
+#coordinates (for tilde symbol push altkey+5)
+coordinates(meuse)=~x+y
+
+plot(meuse)
+plot(meuse, "zinc")
+
+#plot spatial amount of copper
+plot(meuse, "copper", main="Copper concentration")
+
+bubble(meuse, "zinc")
+bubble(meuse, "zinc", main="Zinc concentration")
+
+#bubble copper in red
+bubble(meuse, "copper", main="Copper concentration", col="red")
+
+#importing new data
+#download covid_agg.cvs from teaching site and build folder called lab in C:
+#put covid_agg.cvs file into folder lab
+#set work directory: lab
+#setwd("/User/melissa/lab/") mac
+#setwd("C:/lab/")
+
+covid<- read.table("covid_agg.cvs", head=T)
+head=(covid)
+plot(country, cases)
+
+#plot(covid$country, covid$cases)
+plot(country, cases, las=0) #parallel labels
+plot(country, cases, las=1) #horizontal labels
+plot(country, cases, las=2) #perpendicular labels
+plot(country, cases, las=3) #vertical labels
+
+plot(country, cases, las=3, cex.axis=0.5) 
+plot(country, cases, las=3, cex.axis=0.7) 
+
+#ggplot2 package
+install.packages("ggplot2")
+library(ggplot2) #require gg plot
+install.packages("ggplot2")
+
+#if ggplot2 is not find: install devtools package and then install
+#install.packages("devtools")
+devtools::install_github("tidyverse/ggplot2")
+
+#save R data under menu file; for Windows save as "name.RData"
+
+#load previously saved .RData
+#setting working directory: lab
+Windows
+# setwd("C:/lab/")
+# Mac users
+# setwd("/Users/yourname/lab/")
+
+load("spatial.RData")
+
+ls()
+# covid
+
+install.packages("ggplot2")
+library(ggplot2) #require(ggplot2)
+
+data(mpg)
+head(mpg)
+# key components: data, aes, geometry
+ggplot(mpg, aes(x=displ,y=hwy)) + geom_point()
+ggplot(mpg, aes(x=displ,y=hwy)) + geom_line()
+ggplot(mpg, aes(x=displ,y=hwy)) + geom_polygon()
+
+head(covid)
+ggplot(covid, aes(x=lon, y=lat, size=cases)) + geom_point()
+
+# Mac Users: in case you receive a graphical error, assign the ggplot to an object:
+# graph1 <- ggplot(covid, aes(x=lon, y=lat, size=cases)) + geom_point() e in seguito ho 
+# and then plot by:
+# plot(graphs_1) 
+
+
