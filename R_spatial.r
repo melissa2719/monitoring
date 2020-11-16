@@ -44,3 +44,49 @@ bubble(meuse, "lead", col="red")
 #folder of computer called lab
 #save covid data from virtuale in this new folder
 
+
+############################16/11 lesson#############################
+install.packages("ggplot2")
+library(ggplot2)
+#
+biofuels <- c(120, 200, 350, 570, 750)
+oxydative <- c(1200, 1300, 21000, 34000, 50000)
+d <- data.frame(biofuels, oxydative)
+d
+#geom point function what kind of geometry we would like to use
+ggplot(d, aes(x = biofuels, y = oxydative)) + geom_point()
+ggplot(d, aes(x = biofuels, y = oxydative)) + geom_point()
+d <- data.frame(biofuels, oxydative)
+
+#geom point function and she will know data inside
+ggplot(d, aes(x = biofuels, y = oxydative)) + geom_point()
+
+#change size and color so stated that ggplot open a new plot and put it on the table
+#we will enter inside () changing size and color: size =5, col="red"
+# " " used for color text and packages external to r
+
+ggplot(d, aes(x = biofuels, y = oxydative)) + geom_point(size =5, col="red")
+
+#lines in the plot instead of points---> geom_lines which shows the trend of the data
+ggplot(d, aes(x = biofuels, y = oxydative)) + geom_line()
+ggplot(d, aes(x = biofuels, y = oxydative)) + geom_line(size =5, col="red")
+
+#points + lines
+ggplot(d, aes(x = biofuels, y = oxydative)) + geom_point(size =5, col="red") + geom_line()
+
+#polygons
+ggplot(d, aes(x = biofuels, y = oxydative)) + geom_polygon()
+
+###################set working directory, importing data from an external file
+#lab directory is outside r so we have to explain to it using brackets
+setwd("path/lab")
+
+#setwd windows
+setwd("C:/lab/")
+
+#setwd Mac 
+setwd("/Users/melissa/desktop/lab/")
+#
+
+covid<-read.table("covid_agg.cvs", header=TRUE)
+covid
