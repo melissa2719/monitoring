@@ -1,0 +1,44 @@
+#point pattern analysis, how to install the packages
+
+install.packages('spatstat')
+#no brackets cause it's already installed
+library(spatstat)
+#point pattern analysis: most ecological data are recorded in-situ so we have coordinates X and Y
+#3 types of clumped, uniform and random distribution; also how much point are dense is crucial so more dense there is a forest if it's scattered there are single trees. point pattern is important. 
+#interpolation it's also important....
+
+######### IMPORT DATA FROM AN EXTERNAL SOURCE # setwd("path/lab") 
+
+# setwd for Windows
+# setwd("C:/lab/") 
+
+# setwd Mac
+# setwd("/Users/yourname/lab/") # Linux
+
+setwd("~/lab/")
+
+covid <- read.table("covid_agg.csv", header=TRUE)
+covid
+
+#How spatstat works(presentations on virtuale
+#ket's see the density of covid data
+#make a planar point pattern in spatstat; we need to attach dataframe 
+attach(covid)
+#ppp(x, y,  and ranges(x:are objects so c before the numbers; same for y ranges))
+#ranges in data are different but we want the maximum weight so we have written higher range in order to have a maximum range of data 
+covid_planar <- ppp(lon, lat, c(-180,180), c(-90,90))
+
+#now density map 
+density_map <- density(covid_planar)
+
+#plot the density map
+plot(density_map)
+points(covid_planar)
+
+#change colors see colors file in r
+cl <- colorRampPalette(c('lightblue', 'green', 'darkgreen'))(100)
+plot(density_map, col = cl)
+points(covid_planar)
+
+#rgdal 
+install.packages("rgdal")
