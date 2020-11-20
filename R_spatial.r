@@ -84,9 +84,20 @@ setwd("path/lab")
 #setwd windows
 setwd("C:/lab/")
 
-#setwd Mac 
+#set working directory Mac 
 setwd("/Users/melissa/desktop/lab/")
-#
 
-covid<-read.table("covid_agg.cvs", header=TRUE)
+#covid data is outside so we're going to use brackets, header is to inform R that the first line of data is just the name of the variable and it should not be included
+
+covid<-read.table("covid_agg.csv", header=TRUE)
 covid
+head(covid)
+#summary
+summary(covid)
+#ggplot2 we have already installed this library, names to undestand the x and the y of oue graph; then name the library, then ggplot
+names(covid)
+library(ggplot2)
+ggplot(covid, aes(x = lon, y = lat)) + geom_point()
+
+#changing size of points according to number of cases in March
+ggplot(covid, aes(x = lon, y = lat, size=cases)) + geom_point()
