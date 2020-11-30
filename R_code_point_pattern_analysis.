@@ -163,3 +163,28 @@ coastlines <- readOGR("ne_10m_coastline.shp")
 ## It has 3 fields
 ## Integer64 fields read as strings: scalerank
 plot(coastlines, add=T)
+
+#meridian created by humans while parallels have connection with earth
+#earth is a geoid a surface perpendicular to the gravity force; gravity force is changing over earth depending on rock properties
+#equipotential surface which is best aproximating the sea level
+#long and lat are not fixed are related to the system
+#elissoid common to all of us and gps started in the 70ies? 
+#UTM projection: fusi=zones; 500000 anzichè 0 if <left part of meridian if > right part of meridian
+
+
+######leonardo zabotti data#######
+setwd("/Users/melissa/desktop/lab/")
+leo<- read.table("dati_zabotti.csv", header=T, sep=",")
+#head for first line of dataset
+head(leo)
+attach(leo)
+library(spatstat)
+summary(leo)
+leo_ppp <- ppp(x, y, c(2300000,2325000), c(5005000,5045000))
+plot(leo_ppp)
+attach(leo)
+density_map<-density(leo_ppp)
+plot(density_map)
+points(leo_ppp)
+#save work space
+q()
