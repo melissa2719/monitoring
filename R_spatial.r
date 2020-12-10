@@ -82,10 +82,10 @@ ggplot(d, aes(x = biofuels, y = oxydative)) + geom_polygon()
 setwd("path/lab")
 
 #setwd windows
-setwd("C:/lab/")
+setwd("C:\Users\melis\OneDrive\Desktop\lab")
 
 #set working directory Mac 
-setwd("/Users/melissa/desktop/lab/")
+#setwd("/Users/melissa/desktop/lab/")
 
 #covid data is outside so we're going to use brackets, header is to inform R that the first line of data is just the name of the variable and it should not be included
 
