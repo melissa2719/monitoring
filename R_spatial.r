@@ -82,7 +82,8 @@ ggplot(d, aes(x = biofuels, y = oxydative)) + geom_polygon()
 setwd("path/lab")
 
 #setwd windows
-setwd("C:\Users\melis\OneDrive\Desktop\lab")
+setwd("C:/lab/")
+
 
 #set working directory Mac 
 #setwd("/Users/melissa/desktop/lab/")
