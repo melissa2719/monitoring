@@ -1,0 +1,4 @@
+#
+setwd("C:/lab/")
+load("biomes_mutltivar.RData")
+
