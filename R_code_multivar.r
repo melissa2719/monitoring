@@ -42,3 +42,4 @@ plot(multivar)
 ordiellipse(multivar, type, col=c("black","red","green","blue"), kind = "ehull", lwd=3)
 ordispider(multivar, type, col=c("black","red","green","blue"), label=T)
 dev.off()
+
