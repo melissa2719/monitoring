@@ -34,3 +34,21 @@ ext <- c(0,20,35,55)  # xmin xmax ymin ymax extension
 copNDVI_Italy <- crop(copNDVI, ext)
 plot(copNDVI_Italy, col=clymax)
 
+#deforestation example
+library(raster)
+library(RStoolbox)
+
+setwd("C:/lab/")
+defor1 <- brick("defor1_.jpg")
+defor1
+
+plotRGB(defor1, r=1, g=2, b=3, stretch="Lin")
+
+#import defor 2 jpg
+defor2 <- brick("defor2_.jpg")
+plotRGB(defor2, r=1, g=2, b=3, stretch="Lin")
+
+#put the images one beside the other
+par(mfrow=c(2,1))
+plotRGB(defor1, r=1, g=2, b=3, stretch="Lin")
+plotRGB(defor2, r=1, g=2, b=3, stretch="Lin")
