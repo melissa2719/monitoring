@@ -52,3 +52,13 @@ plotRGB(defor2, r=1, g=2, b=3, stretch="Lin")
 par(mfrow=c(2,1))
 plotRGB(defor1, r=1, g=2, b=3, stretch="Lin")
 plotRGB(defor2, r=1, g=2, b=3, stretch="Lin")
+
+#calculate the vegetation indices
+dvi1<- defor1$defor1_.1 - defor1$defor1_.2
+dev.off()
+plot(dvi1)
+
+cl<- colorRampPalette(c('darkblue', 'yellow', 'red', 'black'))(100)
+plot(dvi1, col=cl)
+
+#to see how it changed during years
