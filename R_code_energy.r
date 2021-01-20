@@ -62,3 +62,37 @@ cl<- colorRampPalette(c('darkblue', 'yellow', 'red', 'black'))(100)
 plot(dvi1, col=cl)
 
 #to see how it changed during years
+dvi2 <- defor2$defor2_.1 - defor2$defor2_.2
+cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifying a color scheme
+plot(dvi2, col=cl)
+
+# Exercise: put images one beside the other with par()
+par(mfrow=c(2,1))
+plot(dvi1, col=cl, main="DVI before cut")
+plot(dvi2, col=cl, main="DVI after cut")
+
+# difference biomass before cut and after cut
+difdvi <- dvi1 -dvi2
+# dev.off()
+plot(difdvi)
+
+cldif <- colorRampPalette(c('blue','white','red'))(100) 
+plot(difdvi, col=cldif, main="amount of energy lost!")
+
+hist(difdvi, col="red")
+
+####### final par!
+# defor1
+# defor2
+# dvi1
+# dvi2
+# difdvi
+# histogram
+
+par(mfrow=c(3,2))
+plotRGB(defor1, r=1, g=2, b=3, stretch="Lin")
+plotRGB(defor2, r=1, g=2, b=3, stretch="Lin")
+plot(dvi1, col=cl, main="biomass before cut")
+plot(dvi2, col=cl, main="biomass after cut")
+plot(difdvi, col=cldif, main="amount of energy lost!")
+hist(difdvi, col="red")
