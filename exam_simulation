@@ -1,0 +1,24 @@
+install.packages("ncdf4")
+library(ncdf4)
+
+setwd("c:/lab/")
+
+library(raster)
+lswt2017<- raster("c_gls_LSWT_201709010000_GLOBE_SLSTRA_v1.0.2.nc")
+plot(lswt2017)
+
+#colorRampPalette
+cllswt2017<-colorRampPalette(c('darkslategray', 'darkslategray4', 'darkslategray1'))(100)
+plot(lswt2017, col=cllswt2017)
+
+#same for 2018
+lswt2018<- raster("c_gls_LSWT_201809010000_GLOBE_SLSTRA_v1.0.2.nc")
+plot(lswt2017)
+cllswt2018<-colorRampPalette(c('darkslategray', 'darkslategray4', 'darkslategray1'))(100)
+plot(lswt2018, col=cllswt2018)
+
+
+#compare difference between temperature
+diflswt<-lswt2018-lswt2019
+cldiflwst<-colorRampPalette(c('blue','white', 'red'))(100)
+plot(diflwst, col=cldiflwst)
