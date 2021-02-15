@@ -1,15 +1,30 @@
 install.packages("ncdf4")
 library(ncdf4)
 
+install.packages("ggplot2")
+library(ggplot2)
+
+install.packages("RStoolbox")
+library(RStoolbox)
+
+install.packages("raster")
+library(raster)
+
 setwd("c:/lab/")
 
 library(raster)
-lswt2017<- raster("c_gls_LSWT_201709010000_GLOBE_SLSTRA_v1.0.2.nc")
-plot(lswt2017)
+lswt2018<- raster("c_gls_LSWT_201810010000_GLOBE_SLSTRA_v1.0.2.nc")
+plot(lswt2018)
 
 #colorRampPalette
-cllswt2017<-colorRampPalette(c('darkslategray', 'darkslategray4', 'darkslategray1'))(100)
-plot(lswt2017, col=cllswt2017)
+cllswt2018<-colorRampPalette(c('darkslategray', 'darkslategray4', 'darkslategray1'))(100)
+plot(lswt2018, col=cllswt2018)
+
+ext <- c(0,50,0,50)
+lswt2018 <- crop(lswt2018, ext)
+plot(lswt2018, main = "lswt2018")
+
+lswt2018 <- crop(lswt2018, ext)
 
 #same for 2018
 lswt2018<- raster("c_gls_LSWT_201809010000_GLOBE_SLSTRA_v1.0.2.nc")
