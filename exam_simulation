@@ -1,39 +1,55 @@
-install.packages("ncdf4")
+# needed packages
+# to read the copernicus data I have to install a package and to use "" in order to let R know that the data is external to the program 
+install.packages("ncdf4") 
+#function library to recall the package
 library(ncdf4)
 
+# ggplot2 is used to create graphics 
 install.packages("ggplot2")
 library(ggplot2)
 
+#RStoolbox is used for remote sensing image processing 
 install.packages("RStoolbox")
 library(RStoolbox)
 
+# install raster package because data are saved in pixels. In the spatial world, each pixel represents an area on the Earth's surface.
 install.packages("raster")
 library(raster)
 
+
+# set the working directory; since I am a windows user i will use setwd("c:/name of the folder which contain the data/")
 setwd("c:/lab/")
 
-library(raster)
-lswt2018<- raster("c_gls_LSWT_201810010000_GLOBE_SLSTRA_v1.0.2.nc")
-plot(lswt2018)
+# for this project I want to study NDVI, fires disturbance and land surface temperature. See if and how those variables have changed over time due to the Amazzonian fire season
+# I choose to plot also the fires disturbance to see the differences in occurrence from this period and others in Amazzonia forests.
 
-#colorRampPalette
-cllswt2018<-colorRampPalette(c('darkslategray', 'darkslategray4', 'darkslategray1'))(100)
-plot(lswt2018, col=cllswt2018)
+#I want to analyse the difference in NDVI during the last years in Amazonian forest
+# The Normalized Difference Vegetation Index (NDVI) is an indicator of the greenness of the biomes
+# I am going to check NDVI for 2015; 2019; 2020.  I'm using "" because data are external to R and I need to import them
+# NDVI is used to observe if the vegetation is alive
+# ndvi after Amazonian fire season in 2015 (Dec 2015)
+ndvi2015<-raster("c_gls_NDVI300_201512210000_GLOBE_PROBAV_V1.0.1.nc")
+#ndvi after Amazonian fire season in 2019 (Dec 2019)
+ndvi2019<-raster("c_gls_NDVI300_201912210000_GLOBE_PROBAV_V1.0.1.nc")
+#ndvi after Amazonian fire season in 2020 (Dec 2020)
+ndvi2020<-raster("c_gls_NDVI300_202012210000_GLOBE_PROBAV_V1.0.1.nc")
 
-ext <- c(0,50,0,50)
-lswt2018 <- crop(lswt2018, ext)
-plot(lswt2018, main = "lswt2018")
+# to see all the data
+Ncl <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100)
+plot(ndvi2015, col=Ncl)
 
-lswt2018 <- crop(lswt2018, ext)
+ 
+# I'm going to plot just the cropped image on South America since the data are heavy, morover I want to focus on Amazonian forest.
+#I choose to crop all the southern continent in order to see better the consequences.
+ext<- c(-90,-25,-75,20) #xmin xmax, ymin e ymax
+# let's crop the ndvi for 2015,2019 and 2020
+ndvi2015 <- crop(ndvi2015, ext)
+ndvi2019 <- crop(ndvi2019, ext)
+ndvi2020 <- crop(ndvi2020, ext)
 
-#same for 2018
-lswt2018<- raster("c_gls_LSWT_201809010000_GLOBE_SLSTRA_v1.0.2.nc")
-plot(lswt2017)
-cllswt2018<-colorRampPalette(c('darkslategray', 'darkslategray4', 'darkslategray1'))(100)
-plot(lswt2018, col=cllswt2018)
+Ncl <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100)
+plot(ndvi2015, col=Ncl)
 
 
-#compare difference between temperature
-diflswt<-lswt2018-lswt2019
-cldiflwst<-colorRampPalette(c('blue','white', 'red'))(100)
-plot(diflwst, col=cldiflwst)
+
+
