@@ -47,9 +47,14 @@ ndvi2015 <- crop(ndvi2015, ext)
 ndvi2019 <- crop(ndvi2019, ext)
 ndvi2020 <- crop(ndvi2020, ext)
 
+Ncl <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100)  # to define the color palette 
+#100 is referred to the number of colors that I'm using, it is possible to put any number
+plot(ndvi2015, col=Ncl, main="NDVI 2015") #function main it's used to name the map
+
+# Now I'm going to export the map in png
+png("NDVI 2015.png")
 Ncl <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100)
-plot(ndvi2015, col=Ncl)
-
-
+plot(ndvi2015, col=Ncl,main="NDVI2015") 
+dev.off()
 
 
