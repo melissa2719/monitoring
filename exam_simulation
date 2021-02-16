@@ -47,6 +47,8 @@ ndvi2015 <- crop(ndvi2015, ext)
 ndvi2019 <- crop(ndvi2019, ext)
 ndvi2020 <- crop(ndvi2020, ext)
 
+# I'm going to plot using a palette
+#2015 situation
 Ncl <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100)  # to define the color palette 
 #100 is referred to the number of colors that I'm using, it is possible to put any number
 plot(ndvi2015, col=Ncl, main="NDVI 2015") #function main it's used to name the map
@@ -56,5 +58,93 @@ png("NDVI 2015.png")
 Ncl <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100)
 plot(ndvi2015, col=Ncl,main="NDVI2015") 
 dev.off()
+
+#2019 situation
+Ncl <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100)  # to define the color palette 
+#100 is referred to the number of colors that I'm using, it is possible to put any number
+plot(ndvi2019, col=Ncl, main="NDVI 2019") #function main it's used to name the map
+
+# Now I'm going to export the map in png
+png("NDVI 2019.png")
+Ncl <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100)
+plot(ndvi2019, col=Ncl,main="NDVI2019") 
+dev.off()
+
+#2020 situation
+Ncl <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100)  # to define the color palette 
+#100 is referred to the number of colors that I'm using, it is possible to put any number
+plot(ndvi2020, col=Ncl, main="NDVI 2020") #function main it's used to name the map
+
+# Now I'm going to export the map in png
+png("NDVI 2020.png")
+Ncl <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100)
+plot(ndvi2020, col=Ncl,main="NDVI2020") 
+dev.off()
+
+
+### let's do the same analysis but with surface temperature between August 2015 and 2019
+t2015 <- raster("temperature2015.nc")
+t2019 <- raster("temperature2019.nc")
+
+# I am cropping on Northern Italy, but I want to focus on Trentino-Alto Adige
+ext<- c(-90,-25,-75,20)
+t2015 <- crop(t2015, ext)
+t2019 <- crop(t2019, ext)
+
+# I am plotting the cropped maps one at a time
+# I want to see the plot (temperature in August 2015)
+# I'm writing the title using main=""
+plot(t2015, main = "Temperature in August 2015")
+
+# save the plot in png
+png("Temperature 2015.png")
+plot(t2015, main = "Temperature in August 2015")
+
+# I want to see the plot (temperautre in August 2019)
+plot(t2019, main = "Temperature in August 2019")
+
+# save the plot in png
+png("Tempertature 2019.png")
+plot(t2019, main = "Temperature in August 2019")
+
+# I want to change the color of the plot to see better the difference
+clt <- colorRampPalette(c("yellow2","goldenrod","darkred"))(100)
+# I am using par function to have multiple graphs in a single plot (mfrow stays for multiframe rows) 
+par(mfrow=c(1,2))
+# I am having 1 row and two columns. Let's see the plot
+plot(t2015, col=clt, main="Temperature August 2015")
+plot(t2019, col=clt, main="Temperature August 2019")
+
+# save the plot in png
+png("Tempertature 2015 and 2019.png")
+clt <- colorRampPalette(c("yellow2","goldenrod","darkred"))(100)
+par(mfrow=c(1,2))
+plot(t2015, col=clt, main="Temperature August 2015")
+plot(t2019, col=clt, main="Temperature August 2019")
+
+dev.off()
+
+# I want to see the difference in temperature
+dif_t <- t2019 - t2015
+plot(dif_t, col= clt, main = "Difference in temperature between August 2019 and August 2015")
+
+# save the plot in png
+png("Tempertature 2015 and 2019.png")
+clt <- colorRampPalette(c("yellow2","goldenrod","darkred"))(100)
+plot(dif_t, col= clt, main = "Difference in temperature between August 2019 and August 2015")
+
+
+# let's see the differences between 2015 and 2019 (NDVI 2015 > NDVI 2019)
+difburnedareas<- ndvi2015-ndvi2019
+plot(difburnedareas, col= Ncl) 
+#the scale of the image is from -1.0 to 1.0 -> right scale for the NDVI
+# to export the map
+#in png
+png("NDVI difburnedareas.png")
+Ncl <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100)
+plot(difburnedareas, col=Ncl,main="NDVI difburnedareas") 
+dev.off()
+
+
 
 
