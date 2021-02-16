@@ -27,14 +27,14 @@ setwd("c:/lab/")
 # The Normalized Difference Vegetation Index (NDVI) is an indicator of the greenness of the biomes
 # I am going to check NDVI for 2015; 2019; 2020.  I'm using "" because data are external to R and I need to import them
 # NDVI is used to observe if the vegetation is alive
-# ndvi after Amazonian fire season in 2015 (Dec 2015)
-ndvi2015<-raster("c_gls_NDVI300_201512210000_GLOBE_PROBAV_V1.0.1.nc")
-#ndvi after Amazonian fire season in 2019 (Dec 2019)
-ndvi2019<-raster("c_gls_NDVI300_201912210000_GLOBE_PROBAV_V1.0.1.nc")
-#ndvi after Amazonian fire season in 2020 (Dec 2020)
-ndvi2020<-raster("c_gls_NDVI300_202012210000_GLOBE_PROBAV_V1.0.1.nc")
+# ndvi after Amazonian fire season in 2015 (Aug 2015)
+ndvi2015<-raster("c_gls_NDVI300_201508210000_GLOBE_PROBAV_V1.0.1.nc")
+#ndvi after Amazonian fire season in 2019 (Aug 2019)
+ndvi2019<-raster("c_gls_NDVI300_201908210000_GLOBE_PROBAV_V1.0.1.nc")
+#ndvi after Amazonian fire season in 2020 (Aug 2020)
+ndvi2020<-raster("c_gls_NDVI300_202008210000_GLOBE_PROBAV_V1.0.1.nc")
 
-# to see all the data
+# to see all the data I'm going to plot global data in order to understand the coordinates to do the crop later
 Ncl <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100)
 plot(ndvi2015, col=Ncl)
 
@@ -74,55 +74,46 @@ dev.off()
 Ncl <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100)  # to define the color palette 
 #100 is referred to the number of colors that I'm using, it is possible to put any number
 plot(ndvi2020, col=Ncl, main="NDVI 2020") #function main it's used to name the map
+#since the data is probably ruined I'm not going to use this year in the next analysis
 
+
+par(mfrow=c(1,2))
+plot(ndvi2015, col=Ncl,main="NDVI2015") 
+plot(ndvi2019, col=Ncl,main="NDVI2019") 
 # Now I'm going to export the map in png
-png("NDVI 2020.png")
-Ncl <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100)
-plot(ndvi2020, col=Ncl,main="NDVI2020") 
+png("NDVI 2015 and 2019.png")
+par(mfrow=c(1,2))
+plot(ndvi2015, col=Ncl,main="NDVI2015") 
+plot(ndvi2019, col=Ncl,main="NDVI2019")
 dev.off()
-
 
 ### let's do the same analysis but with surface temperature between August 2015 and 2019
 t2015 <- raster("temperature2015.nc")
 t2019 <- raster("temperature2019.nc")
 
-# I am cropping on Northern Italy, but I want to focus on Trentino-Alto Adige
+# I'm going to plot just the cropped image on South America since the data are heavy
 ext<- c(-90,-25,-75,20)
 t2015 <- crop(t2015, ext)
 t2019 <- crop(t2019, ext)
 
+# I'm going to set a new color Ramp Palette for the plot to see better the difference
+clt <- colorRampPalette(c("yellow2","goldenrod","darkred"))(100)
+
 # I am plotting the cropped maps one at a time
 # I want to see the plot (temperature in August 2015)
 # I'm writing the title using main=""
-plot(t2015, main = "Temperature in August 2015")
+plot(t2015, col=clt, main = "Temperature in August 2015")
 
 # save the plot in png
 png("Temperature 2015.png")
-plot(t2015, main = "Temperature in August 2015")
+plot(t2015, col=clt, main = "Temperature in August 2015")
 
 # I want to see the plot (temperautre in August 2019)
-plot(t2019, main = "Temperature in August 2019")
+plot(t2019,col=clt, main = "Temperature in August 2019")
 
 # save the plot in png
 png("Tempertature 2019.png")
-plot(t2019, main = "Temperature in August 2019")
-
-# I want to change the color of the plot to see better the difference
-clt <- colorRampPalette(c("yellow2","goldenrod","darkred"))(100)
-# I am using par function to have multiple graphs in a single plot (mfrow stays for multiframe rows) 
-par(mfrow=c(1,2))
-# I am having 1 row and two columns. Let's see the plot
-plot(t2015, col=clt, main="Temperature August 2015")
-plot(t2019, col=clt, main="Temperature August 2019")
-
-# save the plot in png
-png("Tempertature 2015 and 2019.png")
-clt <- colorRampPalette(c("yellow2","goldenrod","darkred"))(100)
-par(mfrow=c(1,2))
-plot(t2015, col=clt, main="Temperature August 2015")
-plot(t2019, col=clt, main="Temperature August 2019")
-
-dev.off()
+plot(t2019,col=clt, main = "Temperature in August 2019")
 
 # I want to see the difference in temperature
 dif_t <- t2019 - t2015
@@ -134,13 +125,48 @@ clt <- colorRampPalette(c("yellow2","goldenrod","darkred"))(100)
 plot(dif_t, col= clt, main = "Difference in temperature between August 2019 and August 2015")
 
 
-# let's see the differences between 2015 and 2019 (NDVI 2015 > NDVI 2019)
-difburnedareas<- ndvi2015-ndvi2019
-plot(difburnedareas, col= Ncl) 
-#the scale of the image is from -1.0 to 1.0 -> right scale for the NDVI
-# to export the map
+# I am using par function to have multiple graphs in a single plot (mfrow stays for multiframe rows) 
+par(mfrow=c(2,2))
+# I am having 1 row and two columns. Let's see the plot
+plot(t2015, col=clt, main="Temperature August 2015")
+plot(t2019, col=clt, main="Temperature August 2019")
+plot(dif_t, col= clt, main = "Difference in temperature between August 2019 and August 2015")
+
+# save the plot in png
+png("Tempertature 2015 and 2019.png")
+par(mfrow=c(2,2))
+plot(t2015, col=clt, main="Temperature August 2015")
+plot(t2019, col=clt, main="Temperature August 2019")
+plot(dif_t, col= clt, main = "Difference in temperature between August 2019 and August 2015")
+
+dev.off()
+
+##BURNED AREAS
+#I've changed again the color to highlight the presence or absence of burned areas
+fcl <- colorRampPalette(c("white", "darkred"))(2)
+burnedareas2015<-raster("c_gls_BA300_201508310000_GLOBE_PROBAV_V1.0.1.nc")
+burnedareas2019<-raster("c_gls_BA300_201908310000_GLOBE_PROBAV_V1.1.1.nc")
+
+ext<- c(-90,-25,-75,20)
+burnedareas2015<- crop(burnedareas2015, ext)
+burnedareas2019 <- crop(burnedareas2019, ext)
+
+plot(burnedareas2015, col=fcl, main="burned areas 2015")
+#low resolution i'm going to replot
+
+ext1<-c(-60,-40,-20,0)
+rburnedareas2015<-crop(rburnedareas2015, ext1)
+plot(rburnedareas2015, col=fcl) #It is strange that there aren't burned areas maybe the resolution it's low; I assume it is due to the disturbance of the fire 
+
+#let's see for 2019
+plot(burnedareas2019, col=fcl, main="burned areas 2019")
+
+#difference between burned areas
+difburnedareas<- burnedareas2019-burnedareas2015
+plot(difburnedareas, col= fcl, main="burned areas")#nel 2015 non veniva niente quindi ho fatto 19-15 
+
 #in png
-png("NDVI difburnedareas.png")
+png(" difburnedareas.png")
 Ncl <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100)
 plot(difburnedareas, col=Ncl,main="NDVI difburnedareas") 
 dev.off()
