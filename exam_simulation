@@ -20,8 +20,8 @@ library(raster)
 # set the working directory; since I am a windows user i will use setwd("c:/name of the folder which contain the data/")
 setwd("c:/lab/")
 
-# for this project I want to study NDVI, fires disturbance and land surface temperature. See if and how those variables have changed over time due to the Amazzonian fire season
-# I choose to plot also the fires disturbance to see the differences in occurrence from this period and others in Amazzonia forests.
+# for this project I want to study NDVI, fires disturbance and land surface temperature. See if and how those variables have changed over time due to the Amazonian fire season
+# I choose to plot also the fires disturbance to see the differences in occurrence from this period and others in Amazonian forest.
 
 #I want to analyse the difference in NDVI during the last years in Amazonian forest
 # The Normalized Difference Vegetation Index (NDVI) is an indicator of the greenness of the biomes
