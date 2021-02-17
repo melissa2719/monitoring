@@ -1,32 +1,39 @@
-# needed packages
+#Amazon Rainforest Fires: A comparison between 2015-2019
+#I want to analyze NDVI, Temperature and Fire disturbance in Amazonian rainforest during fires in 2015 and 2019; morover I will compare the results to see the impacts on vegetation and biomes
+#Since 2019 have had the worst impact on Amazon Rainforest I expect to see in my results <NDVI; >T and >fire disturbance for 2019 rather then 2015
+
+#In order to do that I need to install all the needed packages before starting my analysis
+
+#needed packages
 # to read the copernicus data I have to install a package and to use "" in order to let R know that the data is external to the program 
 install.packages("ncdf4") 
-#function library to recall the package
+#to recall the package installed, I need to use the function library 
 library(ncdf4)
 
-# ggplot2 is used to create graphics 
+# I'm going to install also ggplot2 that is used to create graphics 
 install.packages("ggplot2")
+#and recall the package using library function
 library(ggplot2)
 
-#RStoolbox is used for remote sensing image processing 
+#Another package useful for the analysis is RStoolbox that is used for remote sensing image processing 
 install.packages("RStoolbox")
 library(RStoolbox)
 
-# install raster package because data are saved in pixels. In the spatial world, each pixel represents an area on the Earth's surface.
+# Since data are saved in pixels need to install raster package too. In the spatial world, each pixel represents an area on the Earth's surface.
 install.packages("raster")
 library(raster)
 
-
-# set the working directory; since I am a windows user i will use setwd("c:/name of the folder which contain the data/")
+# Last step before start is setting the working directory; since I am a windows user i will use setwd("c:/name of the folder which contain the data downloaded/")
 setwd("c:/lab/")
 
-# for this project I want to study NDVI, fires disturbance and land surface temperature. See if and how those variables have changed over time due to the Amazonian fire season
-# I choose to plot also the fires disturbance to see the differences in occurrence from this period and others in Amazonian forest.
+# As I said previously, for this project I want to study NDVI, land surface temperature and fire disturbance in 2015 and 2019. See if and how those variables have changed in these years Amazonian Rainforest due to fires 
 
-#I want to analyse the difference in NDVI during the last years in Amazonian forest
-# The Normalized Difference Vegetation Index (NDVI) is an indicator of the greenness of the biomes
-# I am going to check NDVI for 2015; 2019; 2020.  I'm using "" because data are external to R and I need to import them
-# NDVI is used to observe if the vegetation is alive
+## NDVI ANALYSIS
+# The Normalized Difference Vegetation Index (NDVI) is an indicator of the greenness of the biomes therefore it's useful to observe how much of the vegetation is alive.
+# I am going to check NDVI for 2015; 2019; 2020. I choose the month August since it has been the month of the highest peak for fires.  
+#I expect to see >NDVI for 2015 rather than 2019 and 2020 since the biomes have been threaten by fires and by deforestation too. These episode are increasing so I expect to see less vegetation going on with years.
+# I am using "" because data are external to R and I need to import them
+
 # ndvi after Amazonian fire season in 2015 (Aug 2015)
 ndvi2015<-raster("c_gls_NDVI300_201508210000_GLOBE_PROBAV_V1.0.1.nc")
 #ndvi after Amazonian fire season in 2019 (Aug 2019)
@@ -57,6 +64,7 @@ plot(ndvi2015, col=Ncl, main="NDVI 2015") #function main it's used to name the m
 png("NDVI 2015.png")
 Ncl <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100)
 plot(ndvi2015, col=Ncl,main="NDVI2015") 
+
 dev.off()
 
 #2019 situation
@@ -68,6 +76,7 @@ plot(ndvi2019, col=Ncl, main="NDVI 2019") #function main it's used to name the m
 png("NDVI 2019.png")
 Ncl <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100)
 plot(ndvi2019, col=Ncl,main="NDVI2019") 
+
 dev.off()
 
 #2020 situation
@@ -85,7 +94,69 @@ png("NDVI 2015 and 2019.png")
 par(mfrow=c(1,2))
 plot(ndvi2015, col=Ncl,main="NDVI2015") 
 plot(ndvi2019, col=Ncl,main="NDVI2019")
+
 dev.off()
+
+# now I want to see the difference between the two periods
+difndvi_1519 <- ndvi2015 - ndvi2019
+plot(difndvi_1519, col= cln, main = "Difference in NDVI between August 2015 and August 2019")
+
+# save the plot in png
+png("Difference in NDVI 2015 and 2019.png")
+cln <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100)
+difndvi_1519 <- ndvi2015 - ndvi2019
+plot(difndvi_1519, col= cln, main = "Difference in NDVI between August 2015 and August 2019")
+
+dev.off()
+
+###############################################################
+
+
+# let's see fcover
+### Fcover 1 year distance: September 2018 and September 2019
+# Fcover is the fraction of ground covered by green vegetation 
+fcover2018 <- raster("fcvoerseptember2018.nc")
+fcover2019 <- raster("fcoverseptember2019.nc")
+
+# I am cropping on Northern Italy, but I want to focus on Trentino-Alto Adige
+ext <- c(5,16,44,49)
+fcover2018 <- crop(fcover2018, ext)
+fcover2019 <- crop(fcover2019, ext)
+
+# I am plotting the cropped maps 
+# I want to see the plot from september 2018
+# I'm using main = "" to put a title
+plot(fcover2018, main = "Fcover September 2018")
+
+# save the plot in png
+png("Fcover 2018.png")
+plot(fcover2018, main = "Fcover September 2018")
+
+# I want to see the plot from september 2019
+plot(fcover2019, main = "Fcover September 2019")
+
+# save the plot in png
+png("Fcover 2019.png")
+plot(fcover2019, main = "Fcover September 2019")
+
+# I want to change the color of the plot to see better the difference
+clf <- colorRampPalette(c('cornsilk1','blanchedalmond','darkgoldenrod3','palegreen1','green3','darkgreen'))(100)
+# I am using par function to have multiple graphs in a single plot (mfrow stays for multiframe rows) 
+par(mfrow=c(1,2))
+# I am having 1 row and two columns. Let's see the plot
+plot(fcover2018, col=clf,main="Fcover september 2018")
+plot(fcover2019, col=clf, main="Fcover september 2019")
+
+# save the plot in png
+png("Fcover 2018 and 2019.png")
+clf <- colorRampPalette(c('cornsilk1','blanchedalmond','darkgoldenrod3','palegreen1','green3','darkgreen'))(100)
+par(mfrow=c(1,2))
+plot(fcover2018, col=clf,main="Fcover september 2018")
+plot(fcover2019, col=clf, main="Fcover september 2019")
+###########################################
+
+########################################################
+
 
 ### let's do the same analysis but with surface temperature between August 2015 and 2019
 t2015 <- raster("temperature2015.nc")
