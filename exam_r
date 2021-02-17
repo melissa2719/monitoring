@@ -32,8 +32,8 @@ setwd("c:/lab/")
 # The Normalized Difference Vegetation Index (NDVI) is an indicator of the greenness of the biomes therefore it's useful to observe how much of the vegetation is alive.
 # I am going to check NDVI for 2015; 2019; 2020. I choose the month August since it has been the month of the highest peak for fires.  
 #I expect to see >NDVI for 2015 rather than 2019 and 2020 since the biomes have been threaten by fires and by deforestation too. These episode are increasing so I expect to see less vegetation going on with years.
-# I am using "" because data are external to R and I need to import them
 
+# I am using "" because the data are external to R and I need to import them.
 # ndvi after Amazonian fire season in 2015 (Aug 2015)
 ndvi2015<-raster("c_gls_NDVI300_201508210000_GLOBE_PROBAV_V1.0.1.nc")
 #ndvi after Amazonian fire season in 2019 (Aug 2019)
@@ -41,12 +41,11 @@ ndvi2019<-raster("c_gls_NDVI300_201908210000_GLOBE_PROBAV_V1.0.1.nc")
 #ndvi after Amazonian fire season in 2020 (Aug 2020)
 ndvi2020<-raster("c_gls_NDVI300_202008210000_GLOBE_PROBAV_V1.0.1.nc")
 
-# to see all the data I'm going to plot global data in order to understand the coordinates to do the crop later
+# To see all the data I'm going to plot global data in order to understand at which coordinates to do the crop later
 Ncl <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100)
 plot(ndvi2015, col=Ncl)
-
  
-# I'm going to plot just the cropped image on South America since the data are heavy, morover I want to focus on Amazonian forest.
+# Now that I have seen I'm going to plot just the cropped image on South America since the data are heavy, morover I want to focus on Amazonian forest.
 #I choose to crop all the southern continent in order to see better the consequences.
 ext<- c(-90,-25,-75,20) #xmin xmax, ymin e ymax
 # let's crop the ndvi for 2015,2019 and 2020
@@ -111,48 +110,48 @@ dev.off()
 
 ###############################################################
 
-
-# let's see fcover
-### Fcover 1 year distance: September 2018 and September 2019
-# Fcover is the fraction of ground covered by green vegetation 
-fcover2018 <- raster("fcvoerseptember2018.nc")
-fcover2019 <- raster("fcoverseptember2019.nc")
+# Since the results of NDVI are not as expected I choose to proceed also with FCOVER that is going to show me the fraction of ground covered by green vegetation. 
+#FCover quantify the spatial extent of the vegetation; it is independent from the illumination direction and it is sensitive to the vegetation amount therefore I hope to obtain better results and I expect <FCover for 2019.
+### Fcover for 2015 and 2019
+# Fcover   
+fcover2015 <- raster("fcvoer2015.nc")
+fcover2019 <- raster("fcover2019.nc")
 
 # I am cropping on Northern Italy, but I want to focus on Trentino-Alto Adige
-ext <- c(5,16,44,49)
-fcover2018 <- crop(fcover2018, ext)
+ext<- c(-90,-25,-75,20)
+fcover2015 <- crop(fcover2015, ext)
 fcover2019 <- crop(fcover2019, ext)
 
 # I am plotting the cropped maps 
-# I want to see the plot from september 2018
+# I want to see the plot for 2015
 # I'm using main = "" to put a title
-plot(fcover2018, main = "Fcover September 2018")
+plot(fcover2015, main = "Fcover 2015")
 
 # save the plot in png
-png("Fcover 2018.png")
-plot(fcover2018, main = "Fcover September 2018")
+png("Fcover 2015.png")
+plot(fcover2015, main = "Fcover 2015")
 
-# I want to see the plot from september 2019
-plot(fcover2019, main = "Fcover September 2019")
+# I want to see the plot for 2019
+plot(fcover2019, main = "Fcover 2019")
 
 # save the plot in png
 png("Fcover 2019.png")
-plot(fcover2019, main = "Fcover September 2019")
+plot(fcover2019, main = "Fcover 2019")
 
 # I want to change the color of the plot to see better the difference
 clf <- colorRampPalette(c('cornsilk1','blanchedalmond','darkgoldenrod3','palegreen1','green3','darkgreen'))(100)
 # I am using par function to have multiple graphs in a single plot (mfrow stays for multiframe rows) 
 par(mfrow=c(1,2))
 # I am having 1 row and two columns. Let's see the plot
-plot(fcover2018, col=clf,main="Fcover september 2018")
-plot(fcover2019, col=clf, main="Fcover september 2019")
+plot(fcover2015, col=clf,main="Fcover 2015")
+plot(fcover2019, col=clf, main="Fcover  2019")
 
 # save the plot in png
-png("Fcover 2018 and 2019.png")
+png("Fcover 2015 and 2019.png")
 clf <- colorRampPalette(c('cornsilk1','blanchedalmond','darkgoldenrod3','palegreen1','green3','darkgreen'))(100)
 par(mfrow=c(1,2))
-plot(fcover2018, col=clf,main="Fcover september 2018")
-plot(fcover2019, col=clf, main="Fcover september 2019")
+plot(fcover2015, col=clf,main="Fcover 2015")
+plot(fcover2019, col=clf, main="Fcover 2019")
 ###########################################
 
 ########################################################
