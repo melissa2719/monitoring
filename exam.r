@@ -81,7 +81,7 @@ dev.off()
 Ncl <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100)  # to define the color palette 
 #100 is referred to the number of colors that I'm using, it is possible to put any number
 plot(ndvi2020, col=Ncl, main="NDVI 2020") #function main it's used to name the map
-#Since the data is probably ruined I'm not going to use this year in the next analysis; for this reason I choose the title of analysis including only 2015-19.
+#Since the data is probably ruined I'm not going to use this year in the next analysis; for this reason I choose the title of analysis including only 2015 and 2019.
 
 #I am using par function to have multiple graphs in a single plot (mfrow stays for multiframe rows; 1 is the number of the row; 2 since I need two columns in my plot) 
 par(mfrow=c(1,2))
@@ -96,9 +96,23 @@ plot(ndvi2019, col=Ncl,main="NDVI2019")
 
 dev.off()
 
-# now I want to see the difference between the two periods
+#I want to see the difference in NDVI, first with the expected result: ndvi2019-ndvi2015
+#I'm going to change the colorRampPalette
+cln <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100)
+difndvi_1915 <- ndvi2019 - ndvi2015
+plot(difndvi_1915, col= cln, main = "Difference in NDVI between August 2019 and August 2015")
+
+# save the plot in png
+png("Difference in NDVI 2019 and 2015.png")
+cln <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100)
+difndvi_1915 <- ndvi2019 - ndvi2015
+plot(difndvi_1915, col= cln, main = "Difference in NDVI between August 2019 and August 2015")
+
+dev.off()
+
+#Since I've not obtained the expected plot I've decided to do the reverse difference: ndvi2015-ndvi2019
 difndvi_1519 <- ndvi2015 - ndvi2019
-plot(difndvi_1519, col= cln, main = "Difference in NDVI between August 2015 and August 2019")
+plot(difndvi_1519, col= cln, main = "Difference in NDVI between August 2015 and August 2019") #and I've obtained the expected result
 
 # save the plot in png
 png("Difference in NDVI 2015 and 2019.png")
@@ -108,16 +122,23 @@ plot(difndvi_1519, col= cln, main = "Difference in NDVI between August 2015 and 
 
 dev.off()
 
+#To plot my results in a single graph
+par(mfrow=c(2,2)) # 2 row, 2colums
+plot(ndvi2015, col=Ncl,main="NDVI2015") 
+plot(ndvi2019, col=Ncl,main="NDVI2019")
+plot(difndvi_1519, col= cln, main = "Difference in NDVI between August 2015 and August 2019")
+
 ###############################################################
 
 # FCOVER ANALYSIS
 # Since the results of NDVI are not as expected I choose to proceed also with FCOVER that is going to show me the fraction of ground covered by green vegetation. 
+# I expect to see >FCover for 2015 rather than 2019
 #FCover quantify the spatial extent of the vegetation; it is independent from the illumination direction and it is sensitive to the vegetation amount therefore I hope to obtain better results and I expect <FCover for 2019.
-### Fcover for 2015 and 2019: I renamed the downloaded data to be 
+### Fcover for 2015 and 2019: I renamed the downloaded data to be quicker
 fcover2015 <- raster("fcover2015.nc")
 fcover2019 <- raster("fcover2019.nc")
 
-# I am cropping on Northern Italy, but I want to focus on Trentino-Alto Adige
+# I am cropping on South America to have a broader view about Amazon Rainforest situation
 ext<- c(-90,-25,-75,20)
 fcover2015 <- crop(fcover2015, ext)
 fcover2019 <- crop(fcover2019, ext)
