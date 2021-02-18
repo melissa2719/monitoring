@@ -1,6 +1,6 @@
 #Amazon Rainforest Fires: A comparison between 2015-2019
 #I want to analyze NDVI, Temperature and Fire disturbance in Amazon rainforest during the peak burning activity in 2015 and 2019; morover I would like to compare the results to have a broader view of the impacts on vegetation and biomes
-#Since 2019 have had the worst impact on Amazon Rainforest I expect to see in my results < NDVI; >T and >fire disturbance for 2019 rather then 2015
+#Since 2019 have had the worst impact ever seen on Amazon Rainforest I expect to see in my results < NDVI; >T and >fire disturbance for 2019 rather then 2015
 
 #In order to do that I need to install all the needed packages before starting my analysis
 
