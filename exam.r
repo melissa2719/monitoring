@@ -324,12 +324,12 @@ fcl <- colorRampPalette (c("white", "darkred"))(2)
 plot(difburnedareas, col=fcl,main="difburnedareas") 
 dev.off()
 
-#In conclusion I want to put the graphs of the burned area analysis in a single plot so I'm using par function
+#In conclusion I want to put the graphs of the burned area analysis in a single plot so I'm using par function and I'm going to save the plot in png
+png("plotburnedareas.png")
 par(mfrow=c(2,2))
 plot(burnedareas2015, col=fcl, main="burned areas 2015")
 plot(burnedareas2019, col=fcl, main="burned areas 2019")
 plot(difburnedareas, col=fcl,main="difburnedareas") 
-
 ####################################################################################################################################
 
 
