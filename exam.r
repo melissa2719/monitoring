@@ -283,7 +283,7 @@ dev.off()
 
 ### BURNED AREAS ANALYSIS ###
 #I've decided to change the colorRampPalette of the plot to highlight better the presence or absence of burned areas
-fcl <- colorRampPalette (c("white", "darkred"))(2) # to define the color palette #in this case I used (2) since I've only two colors in the palette chosen
+fcl <- colorRampPalette (c("white", "darkred"))(2) # to define the color palette #in this case I used (2) since I've only two colors in this palette
 burnedareas2015<-raster("c_gls_BA300_201508310000_GLOBE_PROBAV_V1.0.1.nc")
 burnedareas2019<-raster("c_gls_BA300_201908310000_GLOBE_PROBAV_V1.1.1.nc")
 
