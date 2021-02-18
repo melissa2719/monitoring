@@ -329,6 +329,7 @@ par(mfrow=c(2,2))
 plot(burnedareas2015, col=fcl, main="burned areas 2015")
 plot(burnedareas2019, col=fcl, main="burned areas 2019")
 plot(difburnedareas, col=fcl,main="difburnedareas") 
+
 ####################################################################################################################################
 
 
