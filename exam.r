@@ -283,7 +283,7 @@ dev.off()
 
 ### BURNED AREAS ANALYSIS ###
 #I've decided to change the colorRampPalette of the plot to highlight better the presence or absence of burned areas
-fcl <- colorRampPalette (c("white", "darkred"))(2) # to define the color palette #in this case I used (2) since I've used only two colors
+fcl <- colorRampPalette (c("white", "darkred"))(2) # to define the color palette #in this case I used (2) since I've only two colors in the palette chosen
 burnedareas2015<-raster("c_gls_BA300_201508310000_GLOBE_PROBAV_V1.0.1.nc")
 burnedareas2019<-raster("c_gls_BA300_201908310000_GLOBE_PROBAV_V1.1.1.nc")
 
@@ -294,26 +294,41 @@ burnedareas2019 <- crop(burnedareas2019, ext)
 
 #to plot with the colorRampPalette just created (col=fcl) and to name my plot (main="burned areas 2015")
 plot(burnedareas2015, col=fcl, main="burned areas 2015")
+#save in png
+png("burnedareas2015.png")
+fcl <- colorRampPalette (c("white", "darkred"))(2)
+plot(burnedareas2015, col=fcl, main="burned areas 2015")
 
-
-#Since I've obtain a low resolution I'm going to replot with another crop
+#Since I've obtained a low resolution I'm going to replot with a closer crop 
 ext1<- c(-70,-40,-30,-15)
-cburnedareas2015<-crop(burnedareas2015, ext1)
+cburnedareas2015<-crop(burnedareas2015, ext1) #I'm calling it cburnedareas2015 to distinguish it from the other one.
 plot(cburnedareas2015, col=fcl, main="burned areas 2015") #It is strange that there aren't burned areas maybe the resolution it's low; I assume that the disturbance of the fire or the cloud cover has distorted the data. 
+#save in png
+png("burned areas 2015 crop.png")
+fcl <- colorRampPalette (c("white", "darkred"))(2)
+plot(cburnedareas2015, col=fcl, main="burned areas 2015")
 
 #let's see the plot for 2019
+plot(burnedareas2019, col=fcl, main="burned areas 2019")
+#save in png
+png("burnedareas2019.png")
+fcl <- colorRampPalette (c("white", "darkred"))(2)
 plot(burnedareas2019, col=fcl, main="burned areas 2019")
 
 #last thing is to see the difference between burned areas; for 2015 I've not seen any burned data so even I will do 2019-2019 burned areas
 difburnedareas<- burnedareas2019-burnedareas2015
 plot(difburnedareas, col= fcl, main=" difference burned areas") 
-
 #save the difference in png
 png(" difburnedareas.png")
 fcl <- colorRampPalette (c("white", "darkred"))(2) 
 plot(difburnedareas, col=fcl,main="difburnedareas") 
-
 dev.off()
+
+#In conclusion I want to put the graphs of the burned area analysis in a single plot so I'm using par function
+par(mfrow=c(2,2))
+plot(burnedareas2015, col=fcl, main="burned areas 2015")
+plot(burnedareas2019, col=fcl, main="burned areas 2019")
+plot(difburnedareas, col=fcl,main="difburnedareas") 
 ####################################################################################################################################
 
 
