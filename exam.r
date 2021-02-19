@@ -1,5 +1,5 @@
 #Amazon Rainforest Fires: A comparison between 2015-2019
-#I want to analyze NDVI, Temperature and Fire disturbance in Amazon rainforest during the peak burning activity in 2015 and 2019; morover I would like to compare the results to have a broader view of the impacts on vegetation and biomes
+#I want to analyze NDVI, Temperature and Fire disturbance in Amazon rainforest during the peak of burning activity in 2015 and 2019; morover I would like to compare the results to have a broader view of the impacts of fires on Amazonian vegetation and biomes
 #Since 2019 have had the worst impact ever seen on Amazon Rainforest I expect to see in my results < NDVI; >T and >fire disturbance for 2019 rather then 2015
 
 #In order to do that I need to install all the needed packages before starting my analysis
@@ -42,7 +42,7 @@ ndvi2019<-raster("c_gls_NDVI300_201908210000_GLOBE_PROBAV_V1.0.1.nc")
 ndvi2020<-raster("c_gls_NDVI300_202008210000_GLOBE_PROBAV_V1.0.1.nc")
 
 # To see all the data I'm going to plot global data in order to understand at which coordinates to do the crop later
-Ncl <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100)
+Ncl <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100) # to define the color palette #100 is referred to the number of colors that I'm using but it is possible to put any number
 plot(ndvi2015, col=Ncl)
  
 # Now that I have seen where to crop and since the data are heavy I'm going to plot just the cropped image on South America , In order to focus better on Brazil and Amazon forest.
@@ -83,7 +83,7 @@ Ncl <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreu
 plot(ndvi2020, col=Ncl, main="NDVI 2020") #function main it's used to name the map
 #Since the data is probably distorted (maybe because the satellite had some problem and it didn't catch the images for 2020)--->I'm not going to use this year in any of the next analysis; this is the reason why I choose the title of my analysis including only 2015 and 2019.
 
-#I am using par function to have multiple graphs in a single plot (mfrow stays for multiframe rows; 1 is the number of the row; 2 is the number of columns I want in my plot) 
+#I am using par function to have multiple graphs in a single plot (mfrow stays for multiframe rows; 1 is the number of the rows; 2 is the number of columns I want in my plot) 
 par(mfrow=c(1,2))
 plot(ndvi2015, col=Ncl,main="NDVI2015") 
 plot(ndvi2019, col=Ncl,main="NDVI2019") 
@@ -100,7 +100,7 @@ dev.off()
 #I'm going to change the colorRampPalette
 cln <- colorRampPalette(c('red','gold','darkgoldenrod3',"cyan","cyan4","chartreuse1","darkgreen"))(100) # to define the color palette 
 difndvi_1915 <- ndvi2019 - ndvi2015
-plot(difndvi_1915, col= cln, main = "Difference in NDVI between August 2019 and August 2015") #I've obtained the expected map with the wrong difference
+plot(difndvi_1915, col= cln, main = "Difference in NDVI between August 2019 and August 2015") #I've obtained the expected map by doing the reverse difference
 
 # save the plot in png
 png("Difference in NDVI 2019 and 2015.png")
@@ -224,7 +224,6 @@ clt <- colorRampPalette(c("yellow2","goldenrod","darkred"))(100) # to define the
 
 # I want to see the plot (temperature in August 2015)
 # I'm writing the title using main=""
-# I'm writing the title using main=""
 plot(t2015, col=clt, main = "Temperature in August 2015")
 
 # save the plot in png
@@ -330,6 +329,7 @@ par(mfrow=c(2,2))
 plot(burnedareas2015, col=fcl, main="burned areas 2015")
 plot(burnedareas2019, col=fcl, main="burned areas 2019")
 plot(difburnedareas, col=fcl,main="difburnedareas") 
+
 ####################################################################################################################################
 
 
